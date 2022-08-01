@@ -25,6 +25,6 @@ app.use('/api/',resume_page);
 app.use('/api/admin',admin_routes);
 
 //App Listener!
-app.listen(PORT,'192.168.213.49',()=>{
+app.listen(PORT,()=>{
     console.log(`App is Listening on ${PORT}`);
 });
