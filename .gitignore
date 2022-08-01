@@ -1,2 +1,4 @@
 node_modules/
-configs/environment/
+configs/environment/dev.env
+configs/environment/prod.env
+
