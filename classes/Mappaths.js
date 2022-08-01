@@ -22,7 +22,7 @@ module.exports = class MapPaths{
         return this.url + "/assets/images/timelines/" + name;
     }
     getOthers = (name)=>{
-        return this.url + "/assets/others/" + name;
+        return this.url + "/assets/Others/" + name;
     }
 
 }
