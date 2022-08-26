@@ -26,5 +26,5 @@ app.use('/api/admin',admin_routes);
 
 //App Listener!
 app.listen(PORT,()=>{
-    console.log(`App is listening on ${PORT}`);
+    console.log(`App is Listening on a ${PORT}`);
 });
