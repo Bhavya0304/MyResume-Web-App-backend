@@ -3,3 +3,4 @@ function runTests(){
 }
 
 runTests();
+throw ReferenceError;
