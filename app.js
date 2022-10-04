@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const { urlencoded } = require('body-parser');
 const mongoose = require('./configs/database/dbConnection');
 const cors = require('cors');
+const { notFoundErrorHandler } = require('./middlewares/errorHandler');
 require('./configs/setConfig');
 
 
@@ -24,6 +25,8 @@ app.use(cors());
 app.use('/api/',resume_page);
 app.use('/api/admin',admin_routes);
 
+
+app.use("*", notFoundErrorHandler); // api route not found error handling
 //App Listener!
 app.listen(PORT,()=>{
     console.log(`App is Listening on a ${PORT}`);
