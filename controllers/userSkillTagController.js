@@ -5,17 +5,33 @@ const MapPaths = require('../classes/Mappaths');
 
 module.exports = {
     get:(req,res)=>{
-        User.getUserSkillTag().then((data)=>{
-            var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
-            data.map((value)=>{
-                value.Image = mp.getSkillTagImages(value.Image);               
-                return value;  
-            });
-            var responseData = new Response({Status:200,Data:{Data:data}});
-            res.send(responseData.getResponse());
+        var username = req.params.id;
+        if(!username){
+            username = "bhavya0304";
+        }
+        User.getUserId(username).then((user)=>{
+            if(!user){
+                var responseData = new Response({Status:404,Error:"No user found!"});
+                res.send(responseData.getResponse());
+            }
+            else{
+                User.getUserSkillTag(user._id).then((data)=>{
+                    var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
+                    data.map((value)=>{
+                        value.Image = mp.getSkillTagImages(username,value.Image);               
+                        return value;  
+                    });
+                    var responseData = new Response({Status:200,Data:{Data:data}});
+                    res.send(responseData.getResponse());
+                }).catch((error)=>{
+                    var responseData = new Response({Status:501,Error:error});
+                    res.send(responseData.getResponse());
+                })
+            }
         }).catch((error)=>{
             var responseData = new Response({Status:501,Error:error});
             res.send(responseData.getResponse());
-        })
+        });
+       
     }
 };

@@ -27,6 +27,10 @@ const UserInfoSchema = new mongoose.Schema({
   Location: {
     type: String,
     required: true,
+  },
+  user_id:{
+    type:String,
+    required:true
   }
 });
 

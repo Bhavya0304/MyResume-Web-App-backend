@@ -5,20 +5,36 @@ const MapPaths = require('../classes/Mappaths');
 
 module.exports = {
     get:(req,res)=>{
-        User.getUserSocialButton().then((data)=>{
-            var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
-            data.map((value)=>{
-                if(value.Social_Media_Name == "MyResume"){
-                    value.Link = mp.getOthers(value.Link);
-                }
-                value.Image = mp.getSocialButtonsImages(value.Image);
-                return value;  
-            });
-            var responseData = new Response({Status:200,Data:{Data:data}});
-            res.send(responseData.getResponse());
+        var username = req.params.id;
+        if(!username){
+            username = "bhavya0304";
+        }
+        User.getUserId(username).then((user)=>{
+            if(!user){
+                var responseData = new Response({Status:404,Error:"No user found!"});
+                res.send(responseData.getResponse());
+            }
+            else{
+                User.getUserSocialButton(user._id).then((data)=>{
+                    var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
+                    data.map((value)=>{
+                        if(value.Social_Media_Name == "MyResume"){
+                            value.Link = mp.getOthers(username,value.Link);
+                        }
+                        value.Image = mp.getSocialButtonsImages(username,value.Image);
+                        return value;  
+                    });
+                    var responseData = new Response({Status:200,Data:{Data:data}});
+                    res.send(responseData.getResponse());
+                }).catch((error)=>{
+                    var responseData = new Response({Status:501,Error:error});
+                    res.send(responseData.getResponse());
+                })
+            }
         }).catch((error)=>{
             var responseData = new Response({Status:501,Error:error});
             res.send(responseData.getResponse());
-        })
+        });
+      
     }
 };  

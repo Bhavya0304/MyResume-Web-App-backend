@@ -3,26 +3,26 @@ module.exports = class MapPaths{
         this.url = url;
     }
 
-    getInfoImage = (name)=>{
-        return this.url + "/assets/images/" + name;
+    getInfoImage = (username,name)=>{
+        return this.url + "/assets/" + username +"/images/" + name;
     }
-    getEducationImage = (name)=>{
-        return this.url + "/assets/images/Logo/" + name;
+    getEducationImage = (username,name)=>{
+        return this.url + "/assets/"+username+"/images/Logo/" + name;
     }
-    getExpirenceImage = (name)=>{
-        return this.url + "/assets/images/Logo/" + name;
+    getExpirenceImage = (username,name)=>{
+        return this.url + "/assets/"+username+"/images/Logo/" + name;
     }
-    getSkillTagImages = (name)=>{
-        return this.url + "/assets/images/Icons/" + name;
+    getSkillTagImages = (username,name)=>{
+        return this.url + "/assets/"+username+"/images/Icons/" + name;
     }
-    getSocialButtonsImages = (name)=>{
-        return this.url + "/assets/images/Icons/" +name;
+    getSocialButtonsImages = (username,name)=>{
+        return this.url + "/assets/"+username+"/images/Icons/" +name;
     }
-    getTimelineImages = (name)=>{
-        return this.url + "/assets/images/timelines/" + name;
+    getTimelineImages = (username,name)=>{
+        return this.url + "/assets/"+username+"/images/timelines/" + name;
     }
-    getOthers = (name)=>{
-        return this.url + "/assets/Others/" + name;
+    getOthers = (username,name)=>{
+        return this.url + "/assets/"+username+"/Others/" + name;
     }
 
 }

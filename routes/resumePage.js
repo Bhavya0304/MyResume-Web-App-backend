@@ -8,13 +8,13 @@ const userSkillTagController = require('../controllers/userSkillTagController');
 const userSocialButtonController = require('../controllers/userSocialButtonController');
 const userTimelineController = require('../controllers/userTimelineController');
 
-router.get('/getuserinfo',userInfoController.get);
-router.get('/getusereducation',userEducationController.get);
-router.get('/getuserexperience',userExperienceController.get);
-router.get('/getuserinfotag',userInfoTagController.get);
-router.get('/getuserskilltag',userSkillTagController.get);
-router.get('/getsocialbutton',userSocialButtonController.get);
-router.post('/getusertimeline',userTimelineController.post);
+router.get('/getuserinfo/:id?',userInfoController.get);
+router.get('/getusereducation/:id?',userEducationController.get);
+router.get('/getuserexperience/:id?',userExperienceController.get);
+router.get('/getuserinfotag/:id?',userInfoTagController.get);
+router.get('/getuserskilltag/:id?',userSkillTagController.get);
+router.get('/getsocialbutton/:id?',userSocialButtonController.get);
+router.post('/getusertimeline/:id?',userTimelineController.post);
 
 module.exports = router;
 

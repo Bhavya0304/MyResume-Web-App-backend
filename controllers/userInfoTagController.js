@@ -4,12 +4,28 @@ const MapPaths = require('../classes/Mappaths');
 
 module.exports = {
     get:(req,res)=>{
-        User.getUserInfoTag().then((data)=>{
-            var responseData = new Response({Status:200,Data:{Data:data}});
-            res.send(responseData.getResponse());
+        var username = req.params.id;
+        if(!username){
+            username = "bhavya0304";
+        }
+        User.getUserId(username).then((user)=>{
+            if(!user){
+                var responseData = new Response({Status:404,Error:"No user found!"});
+                res.send(responseData.getResponse());
+            }
+            else{
+                User.getUserInfoTag(user._id).then((data)=>{
+                    var responseData = new Response({Status:200,Data:{Data:data}});
+                    res.send(responseData.getResponse());
+                }).catch((error)=>{
+                    var responseData = new Response({Status:501,Error:error});
+                    res.send(responseData.getResponse());
+                })
+            }
         }).catch((error)=>{
             var responseData = new Response({Status:501,Error:error});
             res.send(responseData.getResponse());
-        })
+        });
+       
     }
 };
