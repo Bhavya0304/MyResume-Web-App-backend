@@ -21,6 +21,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 
+
 //Passport
 require('./classes/PassportJWT')(passport);
 app.use(passport.initialize());

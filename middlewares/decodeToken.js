@@ -16,7 +16,7 @@ exports.decodeToken = (req,res,next)=>{
         }
         else{
             try{
-                var decoded = jwt.verify(tokenParts[1], process.env.SECRET_KEY);
+                var decoded = jwt.verify(tokenParts[1], process.env.SECRET_KEY,{algorithms:"HS256"});
                 req.body.payload = decoded;
                 next();
             }
