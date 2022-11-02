@@ -6,13 +6,13 @@ exports.decodeToken = (req,res,next)=>{
     const token = req.header('authorization');
     if(!token){
         var responseData = new Response({Status:401,Error:"Unauthorized"});
-        res.status(401).send(responseData.getResponse());
+        res.send(responseData.getResponse());
     }
     else{
         tokenParts = token.split(' ');
         if(tokenParts.length < 2 || tokenParts[0] != "Bearer"){
             var responseData = new Response({Status:401,Error:"Invalid Token"});
-            res.status(401).send(responseData.getResponse());
+            res.send(responseData.getResponse());
         }
         else{
             try{
@@ -22,7 +22,7 @@ exports.decodeToken = (req,res,next)=>{
             }
             catch(e){
                 var responseData = new Response({Status:401,Error:e.toString()});
-                res.status(401).send(responseData.getResponse());
+                res.send(responseData.getResponse());
             }
         }
     }

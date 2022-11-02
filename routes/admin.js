@@ -17,6 +17,7 @@ router.post('/userinfoedit',decodeToken.decodeToken,  passport.authenticate('jwt
 router.get('/verifyuser',decodeToken.decodeToken,  passport.authenticate('jwt', { session: false }) ,userAuthenticationController.get)
 router.get('/getallfiles',decodeToken.decodeToken,  passport.authenticate('jwt', { session: false }) ,fileController.getAllFiles);
 router.post('/uploadfiles',decodeToken.decodeToken,  passport.authenticate('jwt', { session: false }) ,uploadMiddleware.uploadHandlerImg);
+router.post('/uploadresume',decodeToken.decodeToken,  passport.authenticate('jwt', { session: false }) ,uploadMiddleware.uploadHandlerPDF);
 router.post('/deletefiles',decodeToken.decodeToken,  passport.authenticate('jwt', { session: false }) ,fileController.deleteFiles);
 
 

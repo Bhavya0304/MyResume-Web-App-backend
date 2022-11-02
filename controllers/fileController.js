@@ -24,29 +24,7 @@ module.exports = {
         }
     },
     uploadFiles:(req,res)=>{
-        // var username = req.body.payload.sub;
-        // var files = req.body.files;
-        // if(files.length > 0){
-        //     files = files.map((file)=>{
-        //         return file.content.replace(/^data:.*,/, '');
-        //     });
-        //     files.forEach((ele)=>{
-        //         try{
-        //             var name = fileUtils.getFilename(username);
-        //             var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
-        //             fs.writeFile(mp.getImage(username,name),ele,'base64');
-        //         }catch(err){
-        //             var responseData = new Response({Status:501,Error:err});
-        //             res.send(responseData.getResponse());
-        //         }
-        //         var responseData = new Response({Status:200,Data:{Data:"Success"}});
-        //         res.send(responseData.getResponse());
-        //     });
-        // }
-        // else{
-        //     var responseData = new Response({Status:404,Error:"No Image found!"});
-        //     res.send(responseData.getResponse());
-        // }
+        
     },
     deleteFiles:(req,res)=>{
         var username = req.body.payload.sub;

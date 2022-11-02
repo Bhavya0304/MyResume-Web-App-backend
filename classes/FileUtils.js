@@ -25,10 +25,10 @@ function between(min, max) {
 
 function getFilename(username,ext){
     var ran = between(11111111,99999999);
-    var new_name = username + '_' + ran + ".jpg";
+    var new_name = username + '_' + ran +"."+ ext;
     while(doesExists(new_name,username)){
         ran = between(11111111,99999999);
-        new_name = username + '_' + ran + ".jpg";
+        new_name = username + '_' + ran +"."+ ext;
     }
     return new_name;
 }
@@ -50,20 +50,35 @@ var storage = (username,urlType)=>{
             cb(null, "public/assets/"+username+"/" + urlType + "/");
         },
         filename: function (req, file, cb) {
-            cb(null, getFilename(username));
+          if(urlType == "images"){
+            var name = file.originalname;
+            var splits = name.split('.');
+            var ext = splits[splits.length-1];
+            cb(null, getFilename(username,ext));
+          }
+          else{
+            cb(null,"MyResume.pdf");
+          }
+            
         }
     });
 }
 
   var multerUploads = (username,urlType)=>{
 
-      return multer({
+      var ret = multer({
           storage:storage(username,urlType),
           fileFilter: function (req, file, cb){
             
               
               // Set the filetypes, it is optional
-              var filetypes = /jpeg|jpg|png/;
+              var filetypes = "";
+              if(urlType == "images"){
+                filetypes = /jpeg|jpg|png/;
+              }
+              else{
+                filetypes = /pdf/;
+              }
               var mimetype = filetypes.test(file.mimetype);
               
               var extname = filetypes.test(path.extname(
@@ -76,7 +91,14 @@ var storage = (username,urlType)=>{
                     cb("Error: File upload only supports the "
                     + "following filetypes - " + filetypes);
                 } 
-            }).array("files");
+            });
+
+            if(urlType == "images"){
+              return ret.array("files");
+            }
+            else{
+              return ret.single('files');
+            }
             
         } 
             
