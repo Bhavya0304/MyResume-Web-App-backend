@@ -11,7 +11,7 @@ const passport = require('passport');
 
 
 //All Constant Variables
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 //middlewares
