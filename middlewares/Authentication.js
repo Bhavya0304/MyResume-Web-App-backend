@@ -1,9 +1,8 @@
-// const passport = require('passport');
+const passport = require('passport');
+const passportCallback = require('../classes/PassportCallback');
 
-// module.exports = {
-//     AuthenticationWithJWT:(req,res,next)=>{
-//         passport.authenticate('jwt', { session: false },(err,user,info){
-
-//         });
-//     }
-// }
+module.exports = {
+    AuthenticationWithJWT:(req,res,next)=>{
+        passport.authenticate('jwt', { session: false },passportCallback.passportCallback(req,res,next));
+    }
+}

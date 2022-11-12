@@ -69,7 +69,6 @@ var storage = (username,urlType)=>{
       var ret = multer({
           storage:storage(username,urlType),
           fileFilter: function (req, file, cb){
-            
               
               // Set the filetypes, it is optional
               var filetypes = "";
@@ -97,7 +96,7 @@ var storage = (username,urlType)=>{
               return ret.array("files");
             }
             else{
-              return ret.single('files');
+              return ret.array('files');
             }
             
         } 

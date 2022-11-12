@@ -2,7 +2,6 @@ const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../schemas/users');
 
-
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey:  process.env.SECRET_KEY,

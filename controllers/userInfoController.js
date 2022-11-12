@@ -5,6 +5,7 @@ const MapPaths = require('../classes/Mappaths');
 
 module.exports = {
     get:(req,res)=>{
+      
         var username = req.params.id;
         if(!username){
             if(req.body.payload){

@@ -24,7 +24,7 @@ module.exports = {
     uploadHandlerPDF:(req,res)=>{
         var username = req.body.payload.sub;
         var file = path.join(__dirname , "../public/assets/" + username + "/Others/MyResume.pdf");
-        fs_extra.remove(file);
+        fs_extra.removeSync(file);
         res.setHeader("Access-Control-Allow-Origin", "*");
                 var type = "Others";
                 var uploads = fileUtils.multerUploads(username,type);

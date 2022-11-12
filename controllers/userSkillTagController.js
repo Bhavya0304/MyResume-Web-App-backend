@@ -8,6 +8,7 @@ module.exports = {
         var username = req.params.id;
         if(!username){
             username = "bhavya0304";
+
         }
         User.getUserId(username).then((user)=>{
             if(!user){
