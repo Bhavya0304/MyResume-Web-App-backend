@@ -5,7 +5,11 @@ const MapPaths = require('../classes/Mappaths');
 
 module.exports = {
     get:(req,res)=>{
-      
+        // for(var i = 0;i<100000;i++){
+        //     for(var j = 0;j<1000000;j++){
+        //         continue;
+        //     }
+        // }
         var username = req.params.id;
         if(!username){
             if(req.body.payload){

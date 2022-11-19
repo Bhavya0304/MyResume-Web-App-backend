@@ -31,7 +31,7 @@ module.exports = {
        
     },
     editPost:(req,res)=>{
-        var data = req.body.Data;
+        var data = req.body.data;
         if(!data){
             var responseData = new Response({Status:404,Error:"No data found!"});
             res.send(responseData.getResponse());
@@ -46,7 +46,7 @@ module.exports = {
                 else{
                     UserData.editUserInfoTag(user._id.toString(),data).then((newUser)=>{
                         if(newUser){
-                            var responseData = new Response({Status:200,Data:"Success!"});
+                            var responseData = new Response({Status:200,Data:newUser});
                             res.send(responseData.getResponse());
                         }
                         else{
@@ -65,7 +65,7 @@ module.exports = {
         }
     },
     addPost:(req,res)=>{
-        var data = req.body.Data;
+        var data = req.body.data;
         if(!data){
             var responseData = new Response({Status:404,Error:"No data found!"});
             res.send(responseData.getResponse());
@@ -80,7 +80,7 @@ module.exports = {
                 else{
                     UserData.addUserInfoTag(user._id.toString(),data).then((newUser)=>{
                         if(newUser){
-                            var responseData = new Response({Status:200,Data:"Success!"});
+                            var responseData = new Response({Status:200,Data:newUser});
                             res.send(responseData.getResponse());
                         }
                         else{
@@ -99,7 +99,7 @@ module.exports = {
         }
     },
     delete:(req,res)=>{
-        var data = req.body.Data;
+        var data = req.body.data;
         if(!data){
             var responseData = new Response({Status:404,Error:"No data found!"});
             res.send(responseData.getResponse());
@@ -112,7 +112,7 @@ module.exports = {
                     res.send(responseData.getResponse());
                 }
                 else{
-                    UserData.addUserInfoTag(user._id.toString(),data).then((newUser)=>{
+                    UserData.deleteUserInfoTag(user._id.toString(),data).then((newUser)=>{
                         if(newUser){
                             var responseData = new Response({Status:200,Data:"Success!"});
                             res.send(responseData.getResponse());

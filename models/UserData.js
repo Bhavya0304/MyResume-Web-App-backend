@@ -1,5 +1,6 @@
 const userInfo = require('../schemas/userInfo');
 const userInfoTag = require('../schemas/userInfoTag');
+var ObjectID = require('mongodb').ObjectID;
 
 
 const editUserProfile = async (userid,userProfileData)=>{
@@ -13,12 +14,19 @@ const editUserInfoTag = async (userid,userInfoTagData)=>{
 }
 
 const addUserInfoTag = async (userid,userInfoTagData)=>{
-    const data = await userInfoTag.updateOne({user_id:userid},userInfoTagData,{new:true,upsert:true})
+    var newData = new userInfoTag(
+        {
+            _id:new ObjectID(),
+            user_id:userid,
+        ...userInfoTagData
+        }
+    );
+    const data = await userInfoTag.findOneAndUpdate({user_id:userid,_id:newData._id},newData,{new:true,upsert:true});
     return data;
 }
 
 const deleteUserInfoTag = async (userid,id)=>{
-    const data = await userInfoTag.deleteOne({user_id:userid,_id:id});
+    const data = await userInfoTag.deleteOne({user_id:userid,_id:id._id});
     return data;
 }
 
