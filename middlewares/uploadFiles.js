@@ -1,4 +1,5 @@
 const fileUtils = require('../classes/FileUtils');
+const fileUtils3 = require('../classes/s3FileUtils');
 const Response = require('../classes/Response');
 const fs_extra = require('fs-extra');
 const path = require('path');
@@ -9,7 +10,7 @@ module.exports = {
         var username = req.body.payload.sub;
         res.setHeader("Access-Control-Allow-Origin", "*");
                 var type = "images";
-                var uploads = fileUtils.multerUploads(username,type);
+                var uploads = fileUtils3.multerUploads(username,type);
                 uploads(req,res,(err)=>{
                     if(err){
                         var responseData = new Response({Status:501,Error:err});
@@ -23,11 +24,10 @@ module.exports = {
     },
     uploadHandlerPDF:(req,res)=>{
         var username = req.body.payload.sub;
-        var file = path.join(__dirname , "../public/assets/" + username + "/Others/MyResume.pdf");
-        fs_extra.removeSync(file);
+        
         res.setHeader("Access-Control-Allow-Origin", "*");
                 var type = "Others";
-                var uploads = fileUtils.multerUploads(username,type);
+                var uploads = fileUtils3.multerUploads(username,type);
                 uploads(req,res,(err)=>{
                     if(err){
                         var responseData = new Response({Status:501,Error:err});

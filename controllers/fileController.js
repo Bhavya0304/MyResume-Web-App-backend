@@ -1,4 +1,5 @@
 const fileUtils = require('../classes/FileUtils');
+const fileUtils3 = require('../classes/s3FileUtils');
 const MapPaths = require('../classes/Mappaths');
 const fs = require('fs');
 const fs_extra = require('fs-extra');
@@ -10,13 +11,30 @@ module.exports = {
     getAllFiles:(req,res)=>{
         var username = req.body.payload.sub;
         if(username){
-            var files = fileUtils.getAllFiles(username);
-            files = files.map((ele)=>{
-                var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
-                return mp.getImage(username,ele);
-            });
-            var responseData = new Response({Status:200,Data:{Data:files}});
-            res.send(responseData.getResponse());
+            const listParams = {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Prefix: process.env.MEDIA_PATH + "/" + username
+              };
+              
+              S3.listObjectsV2(listParams, function(err, data) {
+                  const fileObjArr = [];
+                if (err) throw err;
+                if(data.Contents && data.Contents.length > 0) {
+                  
+                  // fileObj: S3.ObjectList
+                  data.Contents.forEach((fileObj) => {
+                    if(fileObj.Size > 0) {
+                      fileObjArr.push(
+                       `https://${process.env.AWS_BUCKET_NAME}${process.env.AWS_REGION === 'eu-central-1' ? '.' : '-'}s3${process.env.AWS_REGION === 'us-east-1' ? '' : '-' + process.env.AWS_REGION}.amazonaws.com/${fileObj.Key}`
+                      );
+                    }
+                  })
+                  data.Contents = fileObjArr;
+                }
+               
+                var responseData = new Response({Status:200,Data:{Data:fileObjArr}});
+                res.send(responseData.getResponse());
+              });
         }
         else{
             var responseData = new Response({Status:401,Error:"User not Authorized!"});

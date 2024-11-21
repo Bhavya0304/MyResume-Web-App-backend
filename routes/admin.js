@@ -25,6 +25,8 @@ router.post('/userinfoedit',decodeToken.decodeToken,  passport.authenticate('jwt
 router.post('/userinfotagedit',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false}) ,userInfoTagController.editPost);
 router.post('/userinfotagadd',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false}) ,userInfoTagController.addPost);
 router.post('/userinfotagdelete',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false})  ,userInfoTagController.delete);
-
+router.post('/userskilltagedit',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false}) ,userInfoTagController.editPost);
+router.post('/userskilltagadd',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false}) ,userInfoTagController.addPost);
+router.post('/userskilltagdelete',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false})  ,userInfoTagController.delete);
 
 module.exports = router;
