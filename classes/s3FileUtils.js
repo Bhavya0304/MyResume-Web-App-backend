@@ -1,12 +1,16 @@
 const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-
+const path  = require('path')
+const { v4: uuidv4 } = require("uuid");
 
 AWS.config.update({
-    accessKeyId: process.env.S3_ACCESSKEY,
-    secretAccessKey: process.env.S3_SECRET,
-    signatureVersion: 'v4'
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    signatureVersion: 'v4',
+    apiVersion: 'latest',
+    region:process.env.AWS_REGION,
+    
 });
 
 const S3 = new AWS.S3();
@@ -20,17 +24,17 @@ const fileFilter = (req, file, callback) => {
 }
 
 
+
+
 function getFilename(username,ext){
-    var ran = between(11111111,99999999);
+    var ran = uuidv4(); ;
     var new_name = username + '_' + ran +"."+ ext;
-    while(doesExists(new_name,username)){
-        ran = between(11111111,99999999);
-        new_name = username + '_' + ran +"."+ ext;
-    }
+    
     return new_name;
 }
 
 const multerUploads = (username,type)=>{
+
     var multerfiles3 =  multer({
     fileFilter:function (req, file, cb){
               
@@ -60,7 +64,7 @@ const multerUploads = (username,type)=>{
         contentType: multerS3.AUTO_CONTENT_TYPE,
         key: function (req, file, cb) {
             var fileName = "";
-            if(urlType == "images"){
+            if(type == "images"){
                 var name = file.originalname;
                 var splits = name.split('.');
                 var ext = splits[splits.length-1];
@@ -74,7 +78,6 @@ const multerUploads = (username,type)=>{
             const finalPath = `${s3_inner_directory}/${fileName}`;
 
             file.newName = fileName;
-
             cb(null, finalPath );
         }
 

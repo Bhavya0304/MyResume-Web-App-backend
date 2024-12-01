@@ -31,6 +31,10 @@ const UserEducationSchema = new mongoose.Schema({
   About: {
     type: String,
     required: true,
+  },
+  order:{
+    type:Number,
+    required:true
   }
 });
 

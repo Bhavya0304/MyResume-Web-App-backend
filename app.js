@@ -1,12 +1,13 @@
 //Requires
 const express = require('express');
+require('./configs/setConfig');
+
 const admin_routes = require('./routes/admin');
 const resume_page = require('./routes/resumePage');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('./configs/database/dbConnection');
 const { notFoundErrorHandler } = require('./middlewares/errorHandler');
-require('./configs/setConfig');
 const passport = require('passport');
 
 

@@ -12,6 +12,7 @@ module.exports = {
                 var type = "images";
                 var uploads = fileUtils3.multerUploads(username,type);
                 uploads(req,res,(err)=>{
+                    console.log(err)
                     if(err){
                         var responseData = new Response({Status:501,Error:err});
                         res.send(responseData.getResponse());

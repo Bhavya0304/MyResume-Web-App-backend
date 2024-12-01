@@ -16,16 +16,16 @@ module.exports = {
                 Prefix: process.env.MEDIA_PATH + "/" + username
               };
               
-              S3.listObjectsV2(listParams, function(err, data) {
+              fileUtils3.S3.listObjectsV2(listParams, function(err, data) {
                   const fileObjArr = [];
                 if (err) throw err;
                 if(data.Contents && data.Contents.length > 0) {
                   
                   // fileObj: S3.ObjectList
                   data.Contents.forEach((fileObj) => {
-                    if(fileObj.Size > 0) {
+                    if(fileObj.Size > 0 && !fileObj.Key.includes("pdf")) {
                       fileObjArr.push(
-                       `https://${process.env.AWS_BUCKET_NAME}${process.env.AWS_REGION === 'eu-central-1' ? '.' : '-'}s3${process.env.AWS_REGION === 'us-east-1' ? '' : '-' + process.env.AWS_REGION}.amazonaws.com/${fileObj.Key}`
+                       `https://${process.env.AWS_BUCKET_NAME}${process.env.AWS_REGION === 'eu-central-1' ? '.' : '.'}s3${process.env.AWS_REGION === 'us-east-1' ? '' : '-' + process.env.AWS_REGION}.amazonaws.com/${fileObj.Key}`
                       );
                     }
                   })
@@ -47,18 +47,25 @@ module.exports = {
     deleteFiles:(req,res)=>{
         var username = req.body.payload.sub;
         var files = req.body.files;
-        files = files.map((name)=>{
-            return path.join( __dirname, '../public/assets/'+username+'/images/'+name);
-        });
+       
         try{
-            files.forEach((file)=>{
-                fs_extra.remove(file);
-            });
+            const deleteParam = {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Delete: {
+                  Objects: files.map((key) => ({Key: process.env.MEDIA_PATH+"/"+username+"/"+ key}))
+                }
+              };
+              
+              fileUtils3.S3.deleteObjects(deleteParam, function(err, data) {
+                if (err) throw err;
+               
+                var responseData = new Response({Status:200,Data:{Data:"Success"}});
+                res.send(responseData.getResponse());
+              });
         }catch(err){
             var responseData = new Response({Status:501,Error:err});
             res.send(responseData.getResponse());
         }
-            var responseData = new Response({Status:200,Data:{Data:"Success"}});
-            res.send(responseData.getResponse());
+            
     }
 }
