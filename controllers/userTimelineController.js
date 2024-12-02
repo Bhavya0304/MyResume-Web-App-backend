@@ -12,8 +12,8 @@ module.exports = {
         if(req.body.all){
 
         }
-        var number = req.body.length == undefined ? 5 : parseInt(req.body.length);
-        var skip = req.body.offset == undefined ? 1 : (parseInt(req.body.offset)-1) * parseInt(req.body.length);
+        var number = req.body.length == undefined ? 1000 : parseInt(req.body.length);
+        var skip = req.body.offset == undefined ? 0 : (parseInt(req.body.offset)-1) * parseInt(req.body.length);
         User.getUserId(username).then((user)=>{
             if(!user){
                 var responseData = new Response({Status:404,Error:"No user found!"});
@@ -23,9 +23,8 @@ module.exports = {
                 User.getUserTimeline(user._id,number,skip).then((data)=>{
                     var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
                     data.map((value)=>{
-                        value.Image = value.Image != undefined ? mp.getTimelineImages(value.Image) : "";
                         if(value.Icon != undefined && value.Icon != ""){
-                            value.Icon.Icon  =  mp.getTimelineImages(username,value.Icon.Icon);
+                            value.Icon  =  mp.getTimelineImages(username,value.Icon);
                         }
                         return value;  
                     });

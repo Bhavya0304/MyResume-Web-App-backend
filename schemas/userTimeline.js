@@ -17,14 +17,6 @@ const UserTimelineSchema = new mongoose.Schema({
     required:true
   },
   Icon: {
-        Icon:{
-            type: String,
-        },
-        Icon_Color:{
-            type: String,
-        }
-  },
-  Image: {
     type: String,
   },
   Tags: [

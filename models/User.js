@@ -44,7 +44,7 @@ let getUserSocialButton = async (userid)=>{
 }
 
 let getUserTimeline = async (userid,number,skip)=>{
-    const data = await userTimeline.find({user_id:userid}).sort("Date").skip(skip).limit(number);
+    const data = await userTimeline.find({user_id:userid}).sort([['Date', -1]]).skip(skip).limit(number);
     return data;
 }
 
