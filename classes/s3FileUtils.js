@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const path  = require('path')
-const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -27,7 +27,7 @@ const fileFilter = (req, file, callback) => {
 
 
 function getFilename(username,ext){
-    var ran = uuidv4(); ;
+  let ran = crypto.randomUUID();
     var new_name = username + '_' + ran +"."+ ext;
     
     return new_name;
