@@ -19,7 +19,8 @@ exports.decodeToken = (req,res,next)=>{
                 next();
             }
             catch(e){
-                next();
+                var responseData = new Response({Status:401,Error:"Unauthorized!"});
+                res.send(responseData.getResponse());
             }
         }
     }

@@ -25,6 +25,10 @@ const UserSkillTagSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  order:{
+    type:Number,
+    required:true
+  },
   user_id: {
     type: String
   }

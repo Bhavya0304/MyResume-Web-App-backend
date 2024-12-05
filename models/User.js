@@ -19,12 +19,12 @@ let getUserInfo = async (userid)=>{
 }
 
 let getUserEducation = async (userid)=>{
-    const data = await userEducation.find({user_id:userid});
+    const data = await userEducation.find({user_id:userid}).sort("order");
     return data;
 }
 
 let getUserExperience = async (userid)=>{
-    const data = await userExperience.find({user_id:userid});
+    const data = await userExperience.find({user_id:userid}).sort("order");
     return data;
 }
 
@@ -34,7 +34,7 @@ let getUserInfoTag = async (userid)=>{
 }
 
 let getUserSkillTag = async (userid)=>{
-    const data = await userSkillTag.find({user_id:userid});
+    const data = await userSkillTag.find({user_id:userid}).sort("order");
     return data;
 }
 
@@ -44,7 +44,7 @@ let getUserSocialButton = async (userid)=>{
 }
 
 let getUserTimeline = async (userid,number,skip)=>{
-    const data = await userTimeline.find({user_id:userid}).skip(skip).limit(number);
+    const data = await userTimeline.find({user_id:userid}).sort([['Date', -1]]).skip(skip).limit(number);
     return data;
 }
 
