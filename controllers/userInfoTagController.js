@@ -7,8 +7,12 @@ module.exports = {
     get:(req,res)=>{
         var username = req.params.id;
         if(!username){
-            username = "bhavya0304";
-
+            if(req.body.payload){
+                username = req.body.payload.sub;
+            }
+            else{
+                username = "bhavya0304";
+            }
         }
         User.getUserId(username).then((user)=>{
             if(!user){

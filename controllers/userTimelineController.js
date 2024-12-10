@@ -7,10 +7,12 @@ module.exports = {
     post:(req,res)=>{
         var username = req.params.id;
         if(!username){
-            username = "bhavya0304";
-        }
-        if(req.body.all){
-
+            if(req.body.payload){
+                username = req.body.payload.sub;
+            }
+            else{
+                username = "bhavya0304";
+            }
         }
         var number = req.body.length == undefined ? 1000 : parseInt(req.body.length);
         var skip = req.body.offset == undefined ? 0 : (parseInt(req.body.offset)-1) * parseInt(req.body.length);
