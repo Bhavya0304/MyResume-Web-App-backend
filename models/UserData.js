@@ -5,10 +5,12 @@ const UserSocialIcons = require('../schemas/userSocialButton');
 const userEducation = require('../schemas/userEducation');
 const userExperince = require('../schemas/userExperience');
 const userTimeline = require('../schemas/userTimeline');
+const User = require('../schemas/users');
 var ObjectID = require('mongodb').ObjectID;
 
 
 const editUserProfile = async (userid,userProfileData)=>{
+    const status = await User.findOneAndUpdate({_id:userid},{Status:"active"},{new:true,upsert:true});
     const data = await userInfo.findOneAndUpdate({user_id:userid},userProfileData,{new:true,upsert:true});
     return data;
 }
@@ -179,8 +181,29 @@ const deleteUserTimeline = async (userid,id)=>{
     const data = await userTimeline.deleteOne({user_id:userid,_id:id._id});
     return data;
 }
+const addUser = async (UserData)=>{
+    var newData = new User(
+        {
+            _id:new ObjectID(),
+        ...UserData
+        }
+    );
+    const data = await User.findOneAndUpdate({_id:newData._id},newData,{new:true,upsert:true});
+    return data;
+}
+
+const ActivateUser = async (UserId)=>{
+    var newData = new User(
+        {
+            _id:UserId,
+            Status:"incomplete"
+        }
+    );
+    const data = await User.findOneAndUpdate({_id:newData._id},newData,{new:true,upsert:true});
+    return data;
+}
 
 
 
 
-module.exports = { editUserProfile,editUserInfoTag,addUserInfoTag,deleteUserInfoTag,editUserSkillTag,UpdateSkillsOrder,addUserSkillTag,deleteUserSkillTag,editUserSocialIcons,addUserSocialIcons,deleteUserSocialIcons,editUserEducation,addUserEducation,deleteUserEducation,editUserExperience,UpdateEducationOrder,UpdateExperienceOrder,addUserExperience,deleteUserExperience,editUserTimeline,addUserTimeline,deleteUserTimeline }
+module.exports = { editUserProfile,editUserInfoTag,addUserInfoTag,deleteUserInfoTag,editUserSkillTag,UpdateSkillsOrder,addUserSkillTag,deleteUserSkillTag,editUserSocialIcons,addUserSocialIcons,deleteUserSocialIcons,editUserEducation,addUserEducation,deleteUserEducation,editUserExperience,UpdateEducationOrder,UpdateExperienceOrder,addUserExperience,deleteUserExperience,editUserTimeline,addUserTimeline,deleteUserTimeline,addUser,ActivateUser }

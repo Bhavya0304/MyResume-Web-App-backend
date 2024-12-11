@@ -8,13 +8,18 @@ const userSocialButton = require('../schemas/userSocialButton');
 const userTimeline = require('../schemas/userTimeline');
 
 let getUserId = async (username)=>{
-    const data = await user.findOne({username:username});
+    const data = await user.findOne({username:username,Status:{$ne:"inactive"}});
     return data;
 }
 
+let ExistingUser = async (username,email)=>{
+    const data = await user.findOne({ $or:[{username:username},{email:email}]});
+    return data;
+}
 
 let getUserInfo = async (userid)=>{
-    const data = await userInfo.findOne({user_id:userid});
+    console.log(userid)
+    const data = await userInfo.findOne({user_id:userid,Status:{$ne:"inactive"}});
     return data;
 }
 
@@ -48,4 +53,4 @@ let getUserTimeline = async (userid,number,skip)=>{
     return data;
 }
 
-module.exports = {getUserInfo,getUserEducation,getUserExperience,getUserInfoTag,getUserSkillTag,getUserSocialButton,getUserTimeline,getUserId};
+module.exports = {getUserInfo,ExistingUser,getUserEducation,getUserExperience,getUserInfoTag,getUserSkillTag,getUserSocialButton,getUserTimeline,getUserId};
