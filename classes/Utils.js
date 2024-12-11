@@ -18,6 +18,12 @@ function genPassword(password) {
     };
 }
 
+function GenerateTOTP(username){
+  var secretkey = process.env.SECRET_KEY;
+  var genHash = crypto.pbkdf2Sync(username, secretkey, 10000, 64, 'sha512').toString('hex');
+  return genHash;
+}
+
 
 
 function issueJWT(user) {
@@ -40,4 +46,5 @@ function issueJWT(user) {
 module.exports.validPassword = validPassword;
 module.exports.genPassword = genPassword;
 module.exports.issueJWT = issueJWT;
+module.exports.GenerateTOTP = GenerateTOTP;
 

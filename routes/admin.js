@@ -48,5 +48,7 @@ router.post('/usersocialbuttondelete',decodeToken.decodeToken,  passport.authent
 router.post('/usertimelineedit',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false}) ,userTimelineController.editPost);
 router.post('/usertimelineadd',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false}) ,userTimelineController.addPost);
 router.post('/usertimelinedelete',decodeToken.decodeToken,  passport.authenticate('jwt',{session:false})  ,userTimelineController.delete);
+router.post('/register',  userAuthenticationController.register);
+router.get('/activateuser',userAuthenticationController.activateUser);
 
 module.exports = router;

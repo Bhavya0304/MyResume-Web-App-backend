@@ -9,6 +9,9 @@ const UsersSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email:{
+    type:String
+  },
   password: {
     type: String,
     required: true,
@@ -19,6 +22,11 @@ const UsersSchema = new mongoose.Schema({
   },
   latest_jwt: {
     type: String
+  },
+  Status:{
+    type:String,
+    required:true,
+    default:"inactive"
   }
 });
 

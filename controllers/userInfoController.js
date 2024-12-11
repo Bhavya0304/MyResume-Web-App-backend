@@ -25,22 +25,28 @@ module.exports = {
                 res.send(responseData.getResponse());
             }
             else{
-
-            User.getUserInfo(user._id).then((data)=>{
-                var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
-               
-                    data.ProfilePic = mp.getInfoImage(username,data.ProfilePic);
-                    data.ProfileCovers.forEach((ele,index)=>{
-                        data.ProfileCovers[index] = mp.getInfoImage(username,ele);
-                    
-                });
-    
-                var responseData = new Response({Status:200,Data:{Data:data}});
-                res.send(responseData.getResponse());
-            }).catch((error)=>{
-                var responseData = new Response({Status:501,Error:error});
-                res.send(responseData.getResponse());
-            })
+                if(user.Status == "incomplete"){
+                    var responseData = new Response({Status:200,Data:{Data:{Status:"incomplete"}}});
+                    res.send(responseData.getResponse());
+                }
+                else{
+                    User.getUserInfo(user._id).then((data)=>{
+                        var mp = new MapPaths(req.protocol+"://"+ req.get('host'));
+                       
+                            data.ProfilePic = mp.getInfoImage(username,data.ProfilePic);
+                            data.ProfileCovers.forEach((ele,index)=>{
+                                data.ProfileCovers[index] = mp.getInfoImage(username,ele);
+                            
+                        });
+            
+                        var responseData = new Response({Status:200,Data:{Data:data}});
+                        res.send(responseData.getResponse());
+                    }).catch((error)=>{
+                        var responseData = new Response({Status:501,Error:error});
+                        res.send(responseData.getResponse());
+                    })
+                }
+           
         }
         }).catch((error)=>{
             var responseData = new Response({Status:501,Error:error});
@@ -72,6 +78,7 @@ module.exports = {
                             res.send(responseData.getResponse());
                         }
                     }).catch((error)=>{
+                        console.log(error)
                         var responseData = new Response({Status:501,Error:"Some Error!"});
                         res.send(responseData.getResponse());
                     });
